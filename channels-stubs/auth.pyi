@@ -1,0 +1,29 @@
+from collections.abc import Awaitable, Callable
+from typing import Any
+
+from channels.db import database_sync_to_async
+from channels.middleware import BaseMiddleware
+from django.utils.functional import LazyObject
+
+@database_sync_to_async
+def get_user(scope: dict[str, Any]) -> Any: ...
+@database_sync_to_async
+def login(scope: dict[str, Any], user: Any, backend: str | None = None) -> None: ...
+@database_sync_to_async
+def logout(scope: dict[str, Any]) -> None: ...
+def _get_user_session_key(session: dict[str, Any]) -> Any: ...
+
+class UserLazyObject(LazyObject):
+    def _setup(self) -> None: ...
+
+class AuthMiddleware(BaseMiddleware):
+    def populate_scope(self, scope: dict[str, Any]) -> None: ...
+    async def resolve_scope(self, scope: dict[str, Any]) -> None: ...
+    async def __call__(
+        self,
+        scope: dict[str, Any],
+        receive: Callable[[], Awaitable[dict[str, Any]]],
+        send: Callable[[dict[str, Any]], Awaitable[None]],
+    ) -> Any: ...
+
+def AuthMiddlewareStack(inner: Any) -> Any: ...

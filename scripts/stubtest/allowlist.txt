@@ -1,0 +1,10 @@
+channels.consumer.async_to_sync
+channels.db.sync_to_async
+channels.generic.websocket.async_to_sync
+channels.management.commands.runworker.BaseCommand.get_check_kwargs
+channels.management.commands.runworker.Command.worker_class
+channels.routing.URLResolver.url_patterns
+channels.routing.URLResolver.urlconf_module
+channels.testing.ChannelsLiveServerTestCase.static_wrapper
+channels.testing.live.ChannelsLiveServerTestCase.static_wrapper
+channels.testing.live.TransactionTestCase.assertQuerysetEqual
