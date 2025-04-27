@@ -107,3 +107,6 @@ ENV/
 .idea/
 
 channels
+
+#MAC_OS
+.DS_Store

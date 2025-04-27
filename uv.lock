@@ -279,7 +279,7 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "channels", specifier = ">=4.2.2" }]
+requires-dist = [{ name = "channels", specifier = ">=4" }]
 
 [package.metadata.requires-dev]
 dev = [

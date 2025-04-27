@@ -4,6 +4,7 @@
 
 set -e
 
+export PYTHONPATH=$PWD
 export MYPYPATH='.'
 
 # Cleaning existing cache:
