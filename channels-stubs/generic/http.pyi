@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from typing import Any, Union
+from typing import Any, TypeAlias, Union
 
 from asgiref.typing import (
     HTTPDisconnectEvent,
@@ -12,7 +12,7 @@ from asgiref.typing import (
 )
 from channels.consumer import AsyncConsumer
 
-_HTTPSendEvent = Union[
+_HTTPSendEvent: TypeAlias = Union[
     HTTPResponseStartEvent,
     HTTPResponseBodyEvent,
     HTTPResponseTrailersEvent,

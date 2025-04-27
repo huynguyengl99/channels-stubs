@@ -5,8 +5,6 @@ from channels.testing.application import ApplicationCommunicator
 
 # HTTP test-specific response type
 class _HTTPTestResponse(TypedDict, total=False):
-    """HTTP response data structure for test cases"""
-
     status: int
     headers: Iterable[Tuple[bytes, bytes]]
     body: bytes

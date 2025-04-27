@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, ClassVar
+from typing import Any, ClassVar, TypeAlias
 
 from asgiref.typing import ASGIApplication
 from channels.routing import ProtocolTypeRouter
@@ -10,7 +10,7 @@ from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.test.testcases import TransactionTestCase
 from django.test.utils import modify_settings
 
-_StaticWrapper = Callable[[ProtocolTypeRouter], ASGIApplication]
+_StaticWrapper: TypeAlias = Callable[[ProtocolTypeRouter], ASGIApplication]
 
 def make_application(*, static_wrapper: _StaticWrapper | None) -> Any: ...
 

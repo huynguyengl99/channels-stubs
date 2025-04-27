@@ -32,7 +32,7 @@ class _WebsocketTestScope(TypedDict, total=False):
 
 _Connected: TypeAlias = bool
 _CloseCodeOrAcceptSubProtocol: TypeAlias = int | str | None
-_WebsocketConnectResponse = Tuple[_Connected, _CloseCodeOrAcceptSubProtocol]
+_WebsocketConnectResponse: TypeAlias = Tuple[_Connected, _CloseCodeOrAcceptSubProtocol]
 
 class WebsocketCommunicator(ApplicationCommunicator):
     scope: _WebsocketTestScope

@@ -14,8 +14,6 @@ from django.utils.functional import LazyObject
 from typing_extensions import Self
 
 class _LazySession(SessionBase, LazyObject):  # type: ignore[misc]
-    """A lazy loading session object as used in the scope."""
-
     _wrapped: SessionBase
 
 # Base ASGI Scope definition
