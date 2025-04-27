@@ -5,7 +5,7 @@ from asgiref.typing import ASGIApplication
 from channels.layers import BaseChannelLayer
 
 # Define channel scope for worker
-class ChannelWorkerScope(TypedDict):
+class _ChannelWorkerScope(TypedDict):
     """Scope for channel worker connections"""
 
     type: str

@@ -4,13 +4,12 @@ from asgiref.typing import (
     WebSocketConnectEvent,
     WebSocketDisconnectEvent,
     WebSocketReceiveEvent,
-    WebSocketScope,
 )
-from channels.consumer import AsyncConsumer, ChannelScope, SyncConsumer
+from channels.consumer import AsyncConsumer, SyncConsumer, _ChannelScope
 
 class WebsocketConsumer(SyncConsumer):
     groups: ClassVar[list[str] | None]
-    scope: ChannelScope
+    scope: _ChannelScope
     channel_name: str
     channel_layer: Any
     channel_receive: Any
@@ -28,7 +27,7 @@ class WebsocketConsumer(SyncConsumer):
     def receive(
         self, text_data: str | None = ..., bytes_data: bytes | None = ...
     ) -> None: ...
-    def send(
+    def send(  # type: ignore[override]
         self,
         text_data: str | None = ...,
         bytes_data: bytes | None = ...,
@@ -56,7 +55,7 @@ class JsonWebsocketConsumer(WebsocketConsumer):
 
 class AsyncWebsocketConsumer(AsyncConsumer):
     groups: list[str] | None
-    scope: WebSocketScope
+    scope: _ChannelScope
     channel_name: str
     channel_layer: Any
     channel_receive: Any
@@ -74,7 +73,7 @@ class AsyncWebsocketConsumer(AsyncConsumer):
     async def receive(
         self, text_data: str | None = ..., bytes_data: bytes | None = ...
     ) -> None: ...
-    async def send(
+    async def send(  # type: ignore[override]
         self,
         text_data: str | None = ...,
         bytes_data: bytes | None = ...,

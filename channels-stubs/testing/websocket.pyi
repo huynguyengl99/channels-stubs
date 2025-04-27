@@ -13,7 +13,7 @@ from typing import (
 from asgiref.typing import ASGIApplication, ASGIVersions
 from channels.testing.application import ApplicationCommunicator
 
-class WebsocketTestScope(TypedDict, total=False):
+class _WebsocketTestScope(TypedDict, total=False):
     spec_version: int
     type: Literal["websocket"]
     asgi: ASGIVersions
@@ -30,12 +30,12 @@ class WebsocketTestScope(TypedDict, total=False):
     state: NotRequired[Dict[str, Any]]
     extensions: Optional[Dict[str, Dict[object, object]]]
 
-Connected: TypeAlias = bool
-CloseCodeOrAcceptSubProtocol: TypeAlias = int | str | None
-WebsocketConnectResponse = Tuple[Connected, CloseCodeOrAcceptSubProtocol]
+_Connected: TypeAlias = bool
+_CloseCodeOrAcceptSubProtocol: TypeAlias = int | str | None
+_WebsocketConnectResponse = Tuple[_Connected, _CloseCodeOrAcceptSubProtocol]
 
 class WebsocketCommunicator(ApplicationCommunicator):
-    scope: WebsocketTestScope
+    scope: _WebsocketTestScope
     response_headers: list[tuple[bytes, bytes]] | None
 
     def __init__(
@@ -46,7 +46,7 @@ class WebsocketCommunicator(ApplicationCommunicator):
         subprotocols: Iterable[str] | None = ...,
         spec_version: int | None = ...,
     ) -> None: ...
-    async def connect(self, timeout: float = ...) -> WebsocketConnectResponse: ...
+    async def connect(self, timeout: float = ...) -> _WebsocketConnectResponse: ...
     async def send_to(
         self, text_data: str | None = ..., bytes_data: bytes | None = ...
     ) -> None: ...

@@ -4,14 +4,14 @@ from asgiref.typing import ASGIApplication
 from channels.testing.application import ApplicationCommunicator
 
 # HTTP test-specific response type
-class HTTPTestResponse(TypedDict, total=False):
+class _HTTPTestResponse(TypedDict, total=False):
     """HTTP response data structure for test cases"""
 
     status: int
     headers: Iterable[Tuple[bytes, bytes]]
     body: bytes
 
-class HTTPTestScope(TypedDict, total=False):
+class _HTTPTestScope(TypedDict, total=False):
     type: Literal["http"]
     http_version: str
     method: str
@@ -25,7 +25,7 @@ class HTTPTestScope(TypedDict, total=False):
     server: Optional[Tuple[str, Optional[int]]]
 
 class HttpCommunicator(ApplicationCommunicator):
-    scope: HTTPTestScope
+    scope: _HTTPTestScope
     body: bytes
     sent_request: bool
 
@@ -37,4 +37,4 @@ class HttpCommunicator(ApplicationCommunicator):
         body: bytes = ...,
         headers: Iterable[Tuple[bytes, bytes]] | None = ...,
     ) -> None: ...
-    async def get_response(self, timeout: float = ...) -> HTTPTestResponse: ...
+    async def get_response(self, timeout: float = ...) -> _HTTPTestResponse: ...

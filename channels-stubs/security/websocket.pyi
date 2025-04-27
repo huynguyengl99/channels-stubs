@@ -3,7 +3,7 @@ from typing import Any
 from urllib.parse import ParseResult
 
 from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
-from channels.consumer import ChannelScope
+from channels.consumer import _ChannelScope
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 class OriginValidator:
@@ -15,7 +15,7 @@ class OriginValidator:
     ) -> None: ...
     async def __call__(
         self,
-        scope: ChannelScope,
+        scope: _ChannelScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
     ) -> Any: ...

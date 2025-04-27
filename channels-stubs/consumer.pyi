@@ -1,5 +1,5 @@
 from collections.abc import Awaitable, Callable
-from typing import Any, ClassVar, TypedDict, TypeVar
+from typing import Any, ClassVar
 
 from asgiref.typing import (
     ASGIReceiveCallable,
@@ -8,25 +8,18 @@ from asgiref.typing import (
     WebSocketScope,
 )
 from channels.auth import UserLazyObject
+from channels.db import database_sync_to_async
 from django.contrib.sessions.backends.base import SessionBase
 from django.utils.functional import LazyObject
+from typing_extensions import Self
 
-T = TypeVar("T", bound="AsyncConsumer")
-
-# ASGI specification-compliant type definitions
-class ASGIVersions(TypedDict):
-    """ASGI version information"""
-
-    version: str
-    spec_version: str
-
-class LazySession(SessionBase, LazyObject):
+class _LazySession(SessionBase, LazyObject):  # type: ignore[misc]
     """A lazy loading session object as used in the scope."""
 
     _wrapped: SessionBase
 
 # Base ASGI Scope definition
-class ChannelScope(WebSocketScope, total=False):
+class _ChannelScope(WebSocketScope, total=False):
     # Channel specific
     channel: str
     url_route: dict[str, Any]
@@ -34,7 +27,7 @@ class ChannelScope(WebSocketScope, total=False):
 
     # Auth specific
     cookies: dict[str, str]
-    session: LazySession
+    session: _LazySession
     user: UserLazyObject | None
 
 def get_handler_name(message: ASGISendEvent) -> str: ...
@@ -43,7 +36,7 @@ class AsyncConsumer:
     _sync: ClassVar[bool] = ...
     channel_layer_alias: ClassVar[str] = ...
 
-    scope: ChannelScope
+    scope: _ChannelScope
     channel_layer: Any
     channel_name: str
     channel_receive: ASGIReceiveCallable
@@ -51,17 +44,20 @@ class AsyncConsumer:
 
     async def __call__(
         self,
-        scope: ChannelScope,
+        scope: _ChannelScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
     ) -> None: ...
     async def dispatch(self, message: ASGISendEvent) -> None: ...
     async def send(self, message: ASGISendEvent) -> None: ...
     @classmethod
-    def as_asgi(cls: type[T], **initkwargs: Any) -> Callable[..., Awaitable[None]]: ...
+    def as_asgi(
+        cls: type[Self], **initkwargs: Any
+    ) -> Callable[..., Awaitable[None]]: ...
 
 class SyncConsumer(AsyncConsumer):
     _sync: ClassVar[bool] = ...
 
-    def dispatch(self, message: ASGISendEvent) -> None: ...
-    def send(self, message: ASGISendEvent) -> None: ...
+    @database_sync_to_async
+    def dispatch(self, message: ASGISendEvent) -> None: ...  # type: ignore[override]
+    def send(self, message: ASGISendEvent) -> None: ...  # type: ignore[override]

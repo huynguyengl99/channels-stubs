@@ -10,9 +10,9 @@ from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.test.testcases import TransactionTestCase
 from django.test.utils import modify_settings
 
-StaticWrapper = Callable[[ProtocolTypeRouter], ASGIApplication]
+_StaticWrapper = Callable[[ProtocolTypeRouter], ASGIApplication]
 
-def make_application(*, static_wrapper: StaticWrapper | None) -> Any: ...
+def make_application(*, static_wrapper: _StaticWrapper | None) -> Any: ...
 
 class ChannelsLiveServerTestCase(TransactionTestCase):
     host: ClassVar[str] = ...

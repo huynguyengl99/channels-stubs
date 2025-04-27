@@ -12,7 +12,7 @@ from asgiref.typing import (
 )
 from channels.consumer import AsyncConsumer
 
-HTTPSendEvent = Union[
+_HTTPSendEvent = Union[
     HTTPResponseStartEvent,
     HTTPResponseBodyEvent,
     HTTPResponseTrailersEvent,
@@ -22,7 +22,7 @@ HTTPSendEvent = Union[
 
 class AsyncHttpConsumer(AsyncConsumer):
     body: list[bytes]
-    scope: HTTPScope
+    scope: HTTPScope  # type: ignore[assignment]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None: ...
     async def send_headers(
@@ -37,7 +37,7 @@ class AsyncHttpConsumer(AsyncConsumer):
     async def disconnect(self) -> None: ...
     async def http_request(self, message: HTTPRequestEvent) -> None: ...
     async def http_disconnect(self, message: HTTPDisconnectEvent) -> None: ...
-    async def send(
+    async def send(  # type: ignore[override]
         self,
-        message: HTTPSendEvent,
+        message: _HTTPSendEvent,
     ) -> None: ...

@@ -8,7 +8,7 @@ from asgiref.typing import (
     ASGISendCallable,
     ASGISendEvent,
 )
-from channels.consumer import ChannelScope
+from channels.consumer import _ChannelScope
 
 class CookieMiddleware:
     inner: ASGIApplication
@@ -16,7 +16,7 @@ class CookieMiddleware:
     def __init__(self, inner: ASGIApplication) -> None: ...
     async def __call__(
         self,
-        scope: ChannelScope,
+        scope: _ChannelScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
     ) -> Any: ...
@@ -48,11 +48,11 @@ class InstanceSessionWrapper:
     cookie_response_message_types: list[str]
     cookie_name: str
     session_store: Any
-    scope: ChannelScope
+    scope: _ChannelScope
     activated: bool
     real_send: ASGISendCallable
 
-    def __init__(self, scope: ChannelScope, send: ASGISendCallable) -> None: ...
+    def __init__(self, scope: _ChannelScope, send: ASGISendCallable) -> None: ...
     async def resolve_session(self) -> None: ...
     async def send(self, message: ASGISendEvent) -> Awaitable[None]: ...
     async def save_session(self) -> None: ...
@@ -63,7 +63,7 @@ class SessionMiddleware:
     def __init__(self, inner: ASGIApplication) -> None: ...
     async def __call__(
         self,
-        scope: ChannelScope,
+        scope: _ChannelScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
     ) -> ASGIApplication: ...
