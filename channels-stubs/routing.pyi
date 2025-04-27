@@ -1,39 +1,42 @@
-# routing.pyi
-from collections.abc import Awaitable, Callable
 from typing import Any
 
-def get_default_application() -> Any: ...
+from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
+from django.urls.resolvers import URLPattern, URLResolver
+
+from .consumer import ChannelScope
+
+def get_default_application() -> ProtocolTypeRouter: ...
 
 class ProtocolTypeRouter:
-    application_mapping: dict[str, Any]
+    application_mapping: dict[str, ASGIApplication]
 
     def __init__(self, application_mapping: dict[str, Any]) -> None: ...
     async def __call__(
         self,
-        scope: dict[str, Any],
-        receive: Callable[[], Awaitable[dict[str, Any]]],
-        send: Callable[[dict[str, Any]], Awaitable[None]],
-    ) -> Any: ...
+        scope: ChannelScope,
+        receive: ASGIReceiveCallable,
+        send: ASGISendCallable,
+    ) -> None: ...
 
 class URLRouter:
-    _path_routing: bool = True
-    routes: list[Any]
+    _path_routing: bool = ...
+    routes: list[URLPattern | URLResolver]
 
-    def __init__(self, routes: list[Any]) -> None: ...
+    def __init__(self, routes: list[URLPattern | URLResolver]) -> None: ...
     async def __call__(
         self,
-        scope: dict[str, Any],
-        receive: Callable[[], Awaitable[dict[str, Any]]],
-        send: Callable[[dict[str, Any]], Awaitable[None]],
-    ) -> Any: ...
+        scope: ChannelScope,
+        receive: ASGIReceiveCallable,
+        send: ASGISendCallable,
+    ) -> None: ...
 
 class ChannelNameRouter:
-    application_mapping: dict[str, Any]
+    application_mapping: dict[str, ASGIApplication]
 
-    def __init__(self, application_mapping: dict[str, Any]) -> None: ...
+    def __init__(self, application_mapping: dict[str, ASGIApplication]) -> None: ...
     async def __call__(
         self,
-        scope: dict[str, Any],
-        receive: Callable[[], Awaitable[dict[str, Any]]],
-        send: Callable[[dict[str, Any]], Awaitable[None]],
-    ) -> Any: ...
+        scope: ChannelScope,
+        receive: ASGIReceiveCallable,
+        send: ASGISendCallable,
+    ) -> None: ...

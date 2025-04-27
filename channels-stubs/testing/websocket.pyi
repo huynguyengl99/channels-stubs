@@ -1,24 +1,56 @@
-from typing import Any
+from typing import (
+    Any,
+    Dict,
+    Iterable,
+    Literal,
+    NotRequired,
+    Optional,
+    Tuple,
+    TypeAlias,
+    TypedDict,
+)
 
+from asgiref.typing import ASGIApplication, ASGIVersions
 from channels.testing.application import ApplicationCommunicator
 
+class WebsocketTestScope(TypedDict, total=False):
+    spec_version: int
+    type: Literal["websocket"]
+    asgi: ASGIVersions
+    http_version: str
+    scheme: str
+    path: str
+    raw_path: bytes
+    query_string: bytes
+    root_path: str
+    headers: Iterable[Tuple[bytes, bytes]] | None
+    client: Optional[Tuple[str, int]]
+    server: Optional[Tuple[str, Optional[int]]]
+    subprotocols: Iterable[str] | None
+    state: NotRequired[Dict[str, Any]]
+    extensions: Optional[Dict[str, Dict[object, object]]]
+
+Connected: TypeAlias = bool
+CloseCodeOrAcceptSubProtocol: TypeAlias = int | str | None
+WebsocketConnectResponse = Tuple[Connected, CloseCodeOrAcceptSubProtocol]
+
 class WebsocketCommunicator(ApplicationCommunicator):
-    scope: dict[str, Any]
+    scope: WebsocketTestScope
     response_headers: list[tuple[bytes, bytes]] | None
 
     def __init__(
         self,
-        application: Any,
+        application: ASGIApplication,
         path: str,
-        headers: list[tuple[bytes, bytes]] | None = None,
-        subprotocols: list[str] | None = None,
-        spec_version: int | None = None,
+        headers: Iterable[Tuple[bytes, bytes]] | None = ...,
+        subprotocols: Iterable[str] | None = ...,
+        spec_version: int | None = ...,
     ) -> None: ...
-    async def connect(self, timeout: float = 1) -> tuple[bool, str | int | None]: ...
+    async def connect(self, timeout: float = ...) -> WebsocketConnectResponse: ...
     async def send_to(
-        self, text_data: str | None = None, bytes_data: bytes | None = None
+        self, text_data: str | None = ..., bytes_data: bytes | None = ...
     ) -> None: ...
     async def send_json_to(self, data: Any) -> None: ...
-    async def receive_from(self, timeout: float = 1) -> str | bytes: ...
-    async def receive_json_from(self, timeout: float = 1) -> Any: ...
-    async def disconnect(self, code: int = 1000, timeout: float = 1) -> None: ...
+    async def receive_from(self, timeout: float = ...) -> str | bytes: ...
+    async def receive_json_from(self, timeout: float = ...) -> Any: ...
+    async def disconnect(self, code: int = ..., timeout: float = ...) -> None: ...

@@ -1,12 +1,14 @@
-from collections.abc import Awaitable, Callable
-from typing import Any
+from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
+
+from .consumer import ChannelScope
 
 class BaseMiddleware:
-    inner: Any
-    def __init__(self, inner: Any) -> None: ...
+    inner: ASGIApplication | BaseMiddleware
+
+    def __init__(self, inner: ASGIApplication | BaseMiddleware) -> None: ...
     async def __call__(
         self,
-        scope: dict[str, Any],
-        receive: Callable[[], Awaitable[dict[str, Any]]],
-        send: Callable[[dict[str, Any]], Awaitable[None]],
-    ) -> Any: ...
+        scope: ChannelScope,
+        receive: ASGIReceiveCallable,
+        send: ASGISendCallable,
+    ) -> ASGIApplication: ...
