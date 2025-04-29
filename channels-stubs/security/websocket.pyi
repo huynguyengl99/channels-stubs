@@ -2,16 +2,19 @@ from re import Pattern
 from typing import Any
 from urllib.parse import ParseResult
 
-from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
+from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
 from channels.consumer import _ChannelScope
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.utils import _ChannelApplication
 
 class OriginValidator:
-    application: ASGIApplication
+    application: _ChannelApplication
     allowed_origins: list[str | Pattern[str]]
 
     def __init__(
-        self, application: ASGIApplication, allowed_origins: list[str | Pattern[str]]
+        self,
+        application: _ChannelApplication,
+        allowed_origins: list[str | Pattern[str]],
     ) -> None: ...
     async def __call__(
         self,
@@ -26,7 +29,9 @@ class OriginValidator:
     ) -> bool: ...
     def get_origin_port(self, origin: ParseResult | None) -> int | None: ...
 
-def AllowedHostsOriginValidator(application: ASGIApplication) -> OriginValidator: ...
+def AllowedHostsOriginValidator(
+    application: _ChannelApplication,
+) -> OriginValidator: ...
 
 class WebsocketDenier(AsyncWebsocketConsumer):
     async def connect(self) -> None: ...

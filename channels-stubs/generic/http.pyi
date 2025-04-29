@@ -1,24 +1,12 @@
 from collections.abc import Iterable
-from typing import Any, TypeAlias, Union
+from typing import Any
 
 from asgiref.typing import (
     HTTPDisconnectEvent,
     HTTPRequestEvent,
-    HTTPResponseBodyEvent,
-    HTTPResponseStartEvent,
-    HTTPResponseTrailersEvent,
     HTTPScope,
-    HTTPServerPushEvent,
 )
 from channels.consumer import AsyncConsumer
-
-_HTTPSendEvent: TypeAlias = Union[
-    HTTPResponseStartEvent,
-    HTTPResponseBodyEvent,
-    HTTPResponseTrailersEvent,
-    HTTPServerPushEvent,
-    HTTPDisconnectEvent,
-]
 
 class AsyncHttpConsumer(AsyncConsumer):
     body: list[bytes]
@@ -39,5 +27,5 @@ class AsyncHttpConsumer(AsyncConsumer):
     async def http_disconnect(self, message: HTTPDisconnectEvent) -> None: ...
     async def send(  # type: ignore[override]
         self,
-        message: _HTTPSendEvent,
+        message: dict[str, Any],
     ) -> None: ...

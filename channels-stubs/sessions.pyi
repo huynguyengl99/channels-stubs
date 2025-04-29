@@ -3,17 +3,16 @@ from collections.abc import Awaitable
 from typing import Any
 
 from asgiref.typing import (
-    ASGIApplication,
     ASGIReceiveCallable,
     ASGISendCallable,
-    ASGISendEvent,
 )
 from channels.consumer import _ChannelScope
+from channels.utils import _ChannelApplication
 
 class CookieMiddleware:
-    inner: ASGIApplication
+    inner: _ChannelApplication
 
-    def __init__(self, inner: ASGIApplication) -> None: ...
+    def __init__(self, inner: _ChannelApplication) -> None: ...
     async def __call__(
         self,
         scope: _ChannelScope,
@@ -23,7 +22,7 @@ class CookieMiddleware:
     @classmethod
     def set_cookie(
         cls,
-        message: ASGISendEvent,
+        message: dict[str, Any],
         key: str,
         value: str = "",
         max_age: int | None = ...,
@@ -37,7 +36,7 @@ class CookieMiddleware:
     @classmethod
     def delete_cookie(
         cls,
-        message: ASGISendEvent,
+        message: dict[str, Any],
         key: str,
         path: str = ...,
         domain: str | None = ...,
@@ -54,18 +53,18 @@ class InstanceSessionWrapper:
 
     def __init__(self, scope: _ChannelScope, send: ASGISendCallable) -> None: ...
     async def resolve_session(self) -> None: ...
-    async def send(self, message: ASGISendEvent) -> Awaitable[None]: ...
+    async def send(self, message: dict[str, Any]) -> Awaitable[None]: ...
     async def save_session(self) -> None: ...
 
 class SessionMiddleware:
-    inner: ASGIApplication
+    inner: _ChannelApplication
 
-    def __init__(self, inner: ASGIApplication) -> None: ...
+    def __init__(self, inner: _ChannelApplication) -> None: ...
     async def __call__(
         self,
         scope: _ChannelScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
-    ) -> ASGIApplication: ...
+    ) -> _ChannelApplication: ...
 
-def SessionMiddlewareStack(inner: ASGIApplication) -> ASGIApplication: ...
+def SessionMiddlewareStack(inner: _ChannelApplication) -> _ChannelApplication: ...

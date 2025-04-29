@@ -1,7 +1,7 @@
 from typing import Iterable, Literal, Optional, Tuple, TypedDict
 
-from asgiref.typing import ASGIApplication
 from channels.testing.application import ApplicationCommunicator
+from channels.utils import _ChannelApplication
 
 # HTTP test-specific response type
 class _HTTPTestResponse(TypedDict, total=False):
@@ -29,7 +29,7 @@ class HttpCommunicator(ApplicationCommunicator):
 
     def __init__(
         self,
-        application: ASGIApplication,
+        application: _ChannelApplication,
         method: str,
         path: str,
         body: bytes = ...,

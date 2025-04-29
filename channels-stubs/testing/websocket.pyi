@@ -10,8 +10,9 @@ from typing import (
     TypedDict,
 )
 
-from asgiref.typing import ASGIApplication, ASGIVersions
+from asgiref.typing import ASGIVersions
 from channels.testing.application import ApplicationCommunicator
+from channels.utils import _ChannelApplication
 
 class _WebsocketTestScope(TypedDict, total=False):
     spec_version: int
@@ -40,7 +41,7 @@ class WebsocketCommunicator(ApplicationCommunicator):
 
     def __init__(
         self,
-        application: ASGIApplication,
+        application: _ChannelApplication,
         path: str,
         headers: Iterable[Tuple[bytes, bytes]] | None = ...,
         subprotocols: Iterable[str] | None = ...,

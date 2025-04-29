@@ -1,10 +1,16 @@
 from collections.abc import Awaitable, Callable
-from typing import Any
+from typing import Any, Protocol, TypeAlias
 
-from asgiref.typing import ASGIReceiveCallable, ASGISendEvent
+from asgiref.typing import ASGIApplication, ASGIReceiveCallable
 
 def name_that_thing(thing: Any) -> str: ...
 async def await_many_dispatch(
     consumer_callables: list[Callable[[], Awaitable[ASGIReceiveCallable]]],
-    dispatch: Callable[[ASGISendEvent], Awaitable[None]],
+    dispatch: Callable[[dict[str, Any]], Awaitable[None]],
 ) -> None: ...
+
+class _MiddlewareProtocol(Protocol):
+    def __init__(self, *args, **kwargs) -> None: ...
+    async def __call__(self, scope: Any, receive: Any, send: Any) -> Any: ...
+
+_ChannelApplication: TypeAlias = _MiddlewareProtocol | ASGIApplication  # noqa

@@ -1,6 +1,6 @@
 from typing import Any, TypeVar
 
-from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
+from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
 from channels.middleware import BaseMiddleware
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -8,6 +8,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.utils.functional import LazyObject
 
 from .consumer import _ChannelScope, _LazySession
+from .utils import _ChannelApplication
 
 _User = TypeVar("_User", bound=AbstractBaseUser)
 
@@ -29,6 +30,6 @@ class AuthMiddleware(BaseMiddleware):
         scope: _ChannelScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
-    ) -> ASGIApplication: ...
+    ) -> _ChannelApplication: ...
 
-def AuthMiddlewareStack(inner: ASGIApplication) -> ASGIApplication: ...
+def AuthMiddlewareStack(inner: _ChannelApplication) -> _ChannelApplication: ...

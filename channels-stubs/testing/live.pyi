@@ -1,8 +1,8 @@
 from collections.abc import Callable
 from typing import Any, ClassVar, TypeAlias
 
-from asgiref.typing import ASGIApplication
 from channels.routing import ProtocolTypeRouter
+from channels.utils import _ChannelApplication
 from daphne.testing import DaphneProcess
 from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
 from django.db.backends.base.base import BaseDatabaseWrapper
@@ -10,7 +10,7 @@ from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.test.testcases import TransactionTestCase
 from django.test.utils import modify_settings
 
-_StaticWrapper: TypeAlias = Callable[[ProtocolTypeRouter], ASGIApplication]
+_StaticWrapper: TypeAlias = Callable[[ProtocolTypeRouter], _ChannelApplication]
 
 def make_application(*, static_wrapper: _StaticWrapper | None) -> Any: ...
 

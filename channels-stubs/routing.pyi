@@ -1,14 +1,15 @@
-from typing import Any
+from typing import Any, Sequence, TypeAlias
 
-from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
+from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
 from django.urls.resolvers import URLPattern, URLResolver
 
 from .consumer import _ChannelScope
+from .utils import _ChannelApplication
 
 def get_default_application() -> ProtocolTypeRouter: ...
 
 class ProtocolTypeRouter:
-    application_mapping: dict[str, ASGIApplication]
+    application_mapping: dict[str, _ChannelApplication]
 
     def __init__(self, application_mapping: dict[str, Any]) -> None: ...
     async def __call__(
@@ -18,7 +19,11 @@ class ProtocolTypeRouter:
         send: ASGISendCallable,
     ) -> None: ...
 
-class URLRouter:
+_IncludedURLConf: TypeAlias = tuple[
+    Sequence[URLResolver | URLPattern], str | None, str | None
+]
+
+class URLRouter(_IncludedURLConf):
     _path_routing: bool = ...
     routes: list[URLPattern | URLResolver]
 
@@ -31,9 +36,9 @@ class URLRouter:
     ) -> None: ...
 
 class ChannelNameRouter:
-    application_mapping: dict[str, ASGIApplication]
+    application_mapping: dict[str, _ChannelApplication]
 
-    def __init__(self, application_mapping: dict[str, ASGIApplication]) -> None: ...
+    def __init__(self, application_mapping: dict[str, _ChannelApplication]) -> None: ...
     async def __call__(
         self,
         scope: _ChannelScope,

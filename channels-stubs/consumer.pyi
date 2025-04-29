@@ -1,10 +1,9 @@
-from collections.abc import Awaitable, Callable
+from collections.abc import Callable
 from typing import Any, ClassVar
 
 from asgiref.typing import (
     ASGIReceiveCallable,
     ASGISendCallable,
-    ASGISendEvent,
     WebSocketScope,
 )
 from channels.auth import UserLazyObject
@@ -28,7 +27,7 @@ class _ChannelScope(WebSocketScope, total=False):
     session: _LazySession
     user: UserLazyObject | None
 
-def get_handler_name(message: ASGISendEvent) -> str: ...
+def get_handler_name(message: dict[str, Any]) -> str: ...
 
 class AsyncConsumer:
     _sync: ClassVar[bool] = ...
@@ -46,16 +45,16 @@ class AsyncConsumer:
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
     ) -> None: ...
-    async def dispatch(self, message: ASGISendEvent) -> None: ...
-    async def send(self, message: ASGISendEvent) -> None: ...
+    async def dispatch(self, message: dict[str, Any]) -> None: ...
+    async def send(self, message: dict[str, Any]) -> None: ...
     @classmethod
     def as_asgi(
         cls: type[Self], **initkwargs: Any
-    ) -> Callable[..., Awaitable[None]]: ...
+    ) -> Callable[..., Any]: ...  # django re_path & path compatible
 
 class SyncConsumer(AsyncConsumer):
     _sync: ClassVar[bool] = ...
 
     @database_sync_to_async
-    def dispatch(self, message: ASGISendEvent) -> None: ...  # type: ignore[override]
-    def send(self, message: ASGISendEvent) -> None: ...  # type: ignore[override]
+    def dispatch(self, message: dict[str, Any]) -> None: ...  # type: ignore[override]
+    def send(self, message: dict[str, Any]) -> None: ...  # type: ignore[override]

@@ -1,6 +1,6 @@
 from asgiref.server import StatelessServer
-from asgiref.typing import ASGIApplication
 from channels.layers import BaseChannelLayer
+from channels.utils import _ChannelApplication
 
 class Worker(StatelessServer):
     channels: list[str]
@@ -8,7 +8,7 @@ class Worker(StatelessServer):
 
     def __init__(
         self,
-        application: ASGIApplication,
+        application: _ChannelApplication,
         channels: list[str],
         channel_layer: BaseChannelLayer,
         max_applications: int = ...,

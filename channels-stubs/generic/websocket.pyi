@@ -1,4 +1,4 @@
-from typing import Any, ClassVar
+from typing import Any
 
 from asgiref.typing import (
     WebSocketConnectEvent,
@@ -8,7 +8,7 @@ from asgiref.typing import (
 from channels.consumer import AsyncConsumer, SyncConsumer, _ChannelScope
 
 class WebsocketConsumer(SyncConsumer):
-    groups: ClassVar[list[str] | None]
+    groups: list[str] | None
     scope: _ChannelScope
     channel_name: str
     channel_layer: Any
