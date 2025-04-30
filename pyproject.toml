@@ -44,7 +44,7 @@ classifiers = [
 dependencies = [
   "channels>=4"
 ]
-description = "Package description"
+description = "Stubs for django channels"
 license = {file = "LICENSE"}
 name = "channels-stubs"
 readme = "README.md"
