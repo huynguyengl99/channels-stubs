@@ -1,3 +1,9 @@
+## v0.1.2 (2025-04-30)
+
+### Fix
+
+- **docs**: update readme and description
+
 ## v0.1.1 (2025-04-30)
 
 ### Fix
