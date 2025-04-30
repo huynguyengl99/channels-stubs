@@ -1,12 +1,11 @@
-<img src="https://mypy-lang.org/static/mypy_light.svg" alt="mypy logo" width="300px"/>
 
-# pep484 stubs for Django Channels
-
+# Django Channels stubs
+[![Test](https://github.com/huynguyengl99/channels-stubs/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/huynguyengl99/channels-stubs/actions/workflows/test.yml)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 
 
-Stubs for [Django REST Framework](https://pypi.org/project/djangorestframework/).
-Supports Python 3.10 and up.
+Stubs for [Django Channels](https://pypi.org/project/channels/).
+Supports Python 3.10 and up. Supports Channels 4+.
 
 ## Installation
 
