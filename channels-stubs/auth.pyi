@@ -8,14 +8,18 @@ from django.contrib.auth.models import AnonymousUser
 from django.utils.functional import LazyObject
 
 from .consumer import _ChannelScope, _LazySession
+from .db import database_sync_to_async
 from .utils import _ChannelApplication
 
 _User = TypeVar("_User", bound=AbstractBaseUser)
 
+@database_sync_to_async  # type: ignore
 def get_user(scope: _ChannelScope) -> _User | AnonymousUser: ...
+@database_sync_to_async
 def login(
     scope: _ChannelScope, user: _User, backend: BaseBackend | None = ...
 ) -> None: ...
+@database_sync_to_async
 def logout(scope: _ChannelScope) -> None: ...
 def _get_user_session_key(session: _LazySession) -> Any: ...
 

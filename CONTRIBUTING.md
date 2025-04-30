@@ -31,7 +31,13 @@ scripts/stubtest.sh
 bash scripts/lint.sh [--fix]
 ```
 
-3. For committing code, use the [Commitizen](https://commitizen-tools.github.io/commitizen/) tool to follow
+3. To validate the stubs work with multiple python version and all the linter, run:
+
+```bash
+tox
+```
+
+4. For committing code, use the [Commitizen](https://commitizen-tools.github.io/commitizen/) tool to follow
 commit best practices.
 
 ```bash
