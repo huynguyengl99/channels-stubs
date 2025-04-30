@@ -1,3 +1,12 @@
+## v0.1.1 (2025-04-30)
+
+### Fix
+
+- **commitizen**: add pre bump hook for update lock before bump
+- **readme**: update readme file
+- **tox,auth**: add tox for multi environment testing and update async functions for auth
+- **dev,workflow**: update dev relevant files and github workflow files
+
 ## v0.1.0 (2025-04-30)
 
 ### Feat
