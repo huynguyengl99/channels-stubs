@@ -5,8 +5,8 @@
 - **channels-stubs**: update message sent type to generic dict and the middleware protocol
 - **python**: downgrade python version
 - **stubs**: improve stub type correctness
-- **channels-stubs**: write intial pyi files for the channels packages, which pass all stubtest
-- **init**: intial package
+- **channels-stubs**: write initial pyi files for the channels packages, which pass all stubtest
+- **init**: initial package
 
 ### Fix
 

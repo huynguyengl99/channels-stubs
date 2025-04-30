@@ -19,15 +19,10 @@ uv sync
 
 ## Validate the changes before creating a pull request
 
-0. Prepare for test:
-- Docker running
-- Run `docker-compose up` to create testing postgresql database.
-
-
-1. Make sure the existing tests are still passing (and consider adding new tests as well!):
+1. Make sure the existing stub tests are still passing:
 
 ```bash
-pytest --cov-report term-missing --cov=channels_stubs tests
+scripts/stubtest.sh
 ```
 
 2. Reformat and validate the code with the following tools:
