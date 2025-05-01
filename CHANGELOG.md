@@ -1,3 +1,9 @@
+## v0.1.3 (2025-05-01)
+
+### Fix
+
+- **origin_validator**: update allowed_origins to iterable instead of list of string
+
 ## v0.1.2 (2025-04-30)
 
 ### Fix
