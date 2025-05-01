@@ -1,5 +1,5 @@
 from re import Pattern
-from typing import Any
+from typing import Any, Iterable
 from urllib.parse import ParseResult
 
 from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
@@ -9,12 +9,12 @@ from channels.utils import _ChannelApplication
 
 class OriginValidator:
     application: _ChannelApplication
-    allowed_origins: list[str | Pattern[str]]
+    allowed_origins: Iterable[str | Pattern[str]]
 
     def __init__(
         self,
         application: _ChannelApplication,
-        allowed_origins: list[str | Pattern[str]],
+        allowed_origins: Iterable[str | Pattern[str]],
     ) -> None: ...
     async def __call__(
         self,
