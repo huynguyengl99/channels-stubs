@@ -1,9 +1,9 @@
-from collections.abc import Callable
-from typing import Any, ClassVar
+from typing import Any, Awaitable, ClassVar, Protocol
 
 from asgiref.typing import (
     ASGIReceiveCallable,
     ASGISendCallable,
+    Scope,
     WebSocketScope,
 )
 from channels.auth import UserLazyObject
@@ -29,6 +29,14 @@ class _ChannelScope(WebSocketScope, total=False):
 
 def get_handler_name(message: dict[str, Any]) -> str: ...
 
+class _ASGIApplicationProtocol(Protocol):
+    consumer_class: Any
+    consumer_initkwargs: dict[str, Any]
+
+    def __call__(
+        self, scope: Scope, receive: ASGIReceiveCallable, send: ASGISendCallable
+    ) -> Awaitable[None]: ...
+
 class AsyncConsumer:
     _sync: ClassVar[bool] = ...
     channel_layer_alias: ClassVar[str] = ...
@@ -48,9 +56,7 @@ class AsyncConsumer:
     async def dispatch(self, message: dict[str, Any]) -> None: ...
     async def send(self, message: dict[str, Any]) -> None: ...
     @classmethod
-    def as_asgi(
-        cls: type[Self], **initkwargs: Any
-    ) -> Callable[..., Any]: ...  # django re_path & path compatible
+    def as_asgi(cls: type[Self], **initkwargs: Any) -> _ASGIApplicationProtocol: ...
 
 class SyncConsumer(AsyncConsumer):
     _sync: ClassVar[bool] = ...

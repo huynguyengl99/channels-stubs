@@ -8,7 +8,8 @@ dev = [
   "commitizen>=4.4.1,<5",
   "daphne>=4.1.2",
   "django-stubs[compatible-mypy]>=5.1.3",
-  "mypy>=1.15.0"
+  "mypy>=1.15.0",
+  "pyright>=1.1.400"
 ]
 lint = [
   "black>=25.1.0,<26",
@@ -86,6 +87,22 @@ include = ["channels-stubs"]
 
 [tool.hatch.build.targets.wheel]
 include = ["channels-stubs"]
+
+[tool.pyright]
+exclude = [
+  "**/__pycache__",
+  "**/node_modules"
+]
+executionEnvironments = [
+  {root = "channels-stubs"}
+]
+extraPaths = ["./"]
+include = ["channels-stubs"]
+pythonVersion = "3.10"
+reportMissingImports = "error"
+reportPrivateUsage = false
+stubPath = 'channels-stubs'
+typeCheckingMode = "strict"
 
 [tool.tomlsort]
 all = true

@@ -1,4 +1,4 @@
-from typing import Iterable, Literal, Optional, Tuple, TypedDict
+from typing import Iterable, Literal, Optional, TypedDict
 
 from channels.testing.application import ApplicationCommunicator
 from channels.utils import _ChannelApplication
@@ -6,7 +6,7 @@ from channels.utils import _ChannelApplication
 # HTTP test-specific response type
 class _HTTPTestResponse(TypedDict, total=False):
     status: int
-    headers: Iterable[Tuple[bytes, bytes]]
+    headers: Iterable[tuple[bytes, bytes]]
     body: bytes
 
 class _HTTPTestScope(TypedDict, total=False):
@@ -18,9 +18,9 @@ class _HTTPTestScope(TypedDict, total=False):
     raw_path: bytes
     query_string: bytes
     root_path: str
-    headers: Iterable[Tuple[bytes, bytes]] | None
-    client: Optional[Tuple[str, int]]
-    server: Optional[Tuple[str, Optional[int]]]
+    headers: Iterable[tuple[bytes, bytes]] | None
+    client: Optional[tuple[str, int]]
+    server: Optional[tuple[str, Optional[int]]]
 
 class HttpCommunicator(ApplicationCommunicator):
     scope: _HTTPTestScope
@@ -33,6 +33,6 @@ class HttpCommunicator(ApplicationCommunicator):
         method: str,
         path: str,
         body: bytes = ...,
-        headers: Iterable[Tuple[bytes, bytes]] | None = ...,
+        headers: Iterable[tuple[bytes, bytes]] | None = ...,
     ) -> None: ...
     async def get_response(self, timeout: float = ...) -> _HTTPTestResponse: ...

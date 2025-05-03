@@ -70,8 +70,10 @@ class BaseChannelLayer:
     @deprecated("Use require_valid_group_name instead.")
     def valid_group_name(self, group_name: str) -> bool: ...
 
+_InMemoryQueueData: TypeAlias = tuple[float, dict[str, Any]]
+
 class InMemoryChannelLayer(BaseChannelLayer):
-    channels: dict[str, asyncio.Queue]
+    channels: dict[str, asyncio.Queue[_InMemoryQueueData]]
     groups: dict[str, dict[str, float]]
     group_expiry: int
 

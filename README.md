@@ -1,6 +1,7 @@
 # Django Channels stubs
 [![Test](https://github.com/huynguyengl99/channels-stubs/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/huynguyengl99/channels-stubs/actions/workflows/test.yml)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
+[![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
 [![PYPI](https://img.shields.io/pypi/v/channels-stubs)](https://pypi.org/project/channels-stubs/)
 
 

@@ -3,7 +3,7 @@ from typing import Any, ClassVar, TypeAlias
 
 from channels.routing import ProtocolTypeRouter
 from channels.utils import _ChannelApplication
-from daphne.testing import DaphneProcess
+from daphne.testing import DaphneProcess  #  pyright: ignore[reportMissingTypeStubs]
 from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
 from django.db.backends.base.base import BaseDatabaseWrapper
 from django.db.backends.sqlite3.base import DatabaseWrapper

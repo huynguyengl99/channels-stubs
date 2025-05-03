@@ -2,7 +2,7 @@ src = ["channels-stubs", "tests"]
 target-version = "py310"
 
 [lint]
-ignore = ["E501", "N802", "N818"]
+ignore = ["E501", "N802", "N818", "PYI002"]
 select = ["B", "C90", "E", "F", "I", "N", "N", "PL", "PYI", "Q", "W"]
 
 [lint.isort]

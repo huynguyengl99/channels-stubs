@@ -1,0 +1,10 @@
+{
+    "include": [
+        "channels-stubs"
+    ],
+    "typeCheckingMode": "strict",
+    "reportMissingTypeArgument": "warning",
+    "reportPrivateUsage": "none",
+    "stubPath": ".",
+    "pythonVersion": "3.10"
+}

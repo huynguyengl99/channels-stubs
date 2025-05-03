@@ -3,16 +3,17 @@ from typing import (
     Dict,
     Iterable,
     Literal,
-    NotRequired,
     Optional,
     Tuple,
     TypeAlias,
     TypedDict,
+    overload,
 )
 
 from asgiref.typing import ASGIVersions
 from channels.testing.application import ApplicationCommunicator
 from channels.utils import _ChannelApplication
+from typing_extensions import NotRequired
 
 class _WebsocketTestScope(TypedDict, total=False):
     spec_version: int
@@ -51,7 +52,10 @@ class WebsocketCommunicator(ApplicationCommunicator):
     async def send_to(
         self, text_data: str | None = ..., bytes_data: bytes | None = ...
     ) -> None: ...
+    @overload
+    async def send_json_to(self, data: dict[str, Any]) -> None: ...
+    @overload
     async def send_json_to(self, data: Any) -> None: ...
     async def receive_from(self, timeout: float = ...) -> str | bytes: ...
-    async def receive_json_from(self, timeout: float = ...) -> Any: ...
+    async def receive_json_from(self, timeout: float = ...) -> dict[str, Any]: ...
     async def disconnect(self, code: int = ..., timeout: float = ...) -> None: ...
