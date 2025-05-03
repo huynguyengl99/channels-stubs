@@ -1,3 +1,9 @@
+## v0.1.4 (2025-05-03)
+
+### Fix
+
+- **pyright**: support pyright type hint with strict mode
+
 ## v0.1.3 (2025-05-01)
 
 ### Fix
