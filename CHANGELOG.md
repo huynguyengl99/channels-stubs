@@ -1,3 +1,9 @@
+## v0.1.5 (2025-05-05)
+
+### Fix
+
+- **type,django**: corect some types and add django version constraints
+
 ## v0.1.4 (2025-05-03)
 
 ### Fix
