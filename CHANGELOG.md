@@ -1,3 +1,9 @@
+## v0.1.6 (2025-05-05)
+
+### Fix
+
+- **allowlist**: readd UserLazyObject wildcard to allowlist
+
 ## v0.1.5 (2025-05-05)
 
 ### Fix
