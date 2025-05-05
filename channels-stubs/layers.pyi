@@ -1,8 +1,7 @@
 import asyncio
 from re import Pattern
-from typing import Any, TypeAlias, overload
-
-from typing_extensions import deprecated
+from typing import Any, overload
+from typing_extensions import TypeAlias, deprecated
 
 class ChannelLayerManager:
     backends: dict[str, BaseChannelLayer]
@@ -31,15 +30,8 @@ class BaseChannelLayer:
     group_name_regex: Pattern[str]
     invalid_name_error: str
 
-    def __init__(
-        self,
-        expiry: int = ...,
-        capacity: int = ...,
-        channel_capacity: _ChannelCapacityDict | None = ...,
-    ) -> None: ...
-    def compile_capacities(
-        self, channel_capacity: _ChannelCapacityDict
-    ) -> _CompiledChannelCapacity: ...
+    def __init__(self, expiry: int = ..., capacity: int = ..., channel_capacity: _ChannelCapacityDict | None = ...) -> None: ...
+    def compile_capacities(self, channel_capacity: _ChannelCapacityDict) -> _CompiledChannelCapacity: ...
     def get_capacity(self, channel: str) -> int: ...
     @overload
     def match_type_and_length(self, name: str) -> bool: ...
@@ -99,8 +91,6 @@ class InMemoryChannelLayer(BaseChannelLayer):
     async def group_discard(self, group: str, channel: str) -> None: ...
     async def group_send(self, group: str, message: dict[str, Any]) -> None: ...
 
-def get_channel_layer(
-    alias: str = ...,
-) -> BaseChannelLayer | None: ...
+def get_channel_layer(alias: str = ...) -> BaseChannelLayer | None: ...
 
 channel_layers: ChannelLayerManager

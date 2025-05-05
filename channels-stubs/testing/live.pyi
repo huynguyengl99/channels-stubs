@@ -1,14 +1,16 @@
 from collections.abc import Callable
-from typing import Any, ClassVar, TypeAlias
+from typing import Any, ClassVar
+from typing_extensions import TypeAlias
 
 from channels.routing import ProtocolTypeRouter
 from channels.utils import _ChannelApplication
-from daphne.testing import DaphneProcess  #  pyright: ignore[reportMissingTypeStubs]
 from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
 from django.db.backends.base.base import BaseDatabaseWrapper
 from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.test.testcases import TransactionTestCase
 from django.test.utils import modify_settings
+
+DaphneProcess: TypeAlias = Any  # TODO: temporary hack for daphne.testing.DaphneProcess; remove once daphne provides types
 
 _StaticWrapper: TypeAlias = Callable[[ProtocolTypeRouter], _ChannelApplication]
 
@@ -30,6 +32,4 @@ class ChannelsLiveServerTestCase(TransactionTestCase):
     def live_server_ws_url(self) -> str: ...
     def _pre_setup(self) -> None: ...
     def _post_teardown(self) -> None: ...
-    def _is_in_memory_db(
-        self, connection: BaseDatabaseWrapper | DatabaseWrapper
-    ) -> bool: ...
+    def _is_in_memory_db(self, connection: BaseDatabaseWrapper | DatabaseWrapper) -> bool: ...

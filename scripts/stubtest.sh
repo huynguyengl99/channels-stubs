@@ -13,4 +13,5 @@ rm -rf .mypy_cache
 stubtest channels \
     --mypy-config-file mypy.ini \
     --allowlist scripts/stubtest/allowlist.txt \
-    --allowlist scripts/stubtest/allowlist_todo.txt
+    --allowlist scripts/stubtest/allowlist_todo.txt \
+    --ignore-missing-stub

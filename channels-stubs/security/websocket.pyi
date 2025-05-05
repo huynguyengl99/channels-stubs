@@ -1,5 +1,6 @@
+from collections.abc import Iterable
 from re import Pattern
-from typing import Any, Iterable
+from typing import Any
 from urllib.parse import ParseResult
 
 from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
@@ -11,27 +12,14 @@ class OriginValidator:
     application: _ChannelApplication
     allowed_origins: Iterable[str | Pattern[str]]
 
-    def __init__(
-        self,
-        application: _ChannelApplication,
-        allowed_origins: Iterable[str | Pattern[str]],
-    ) -> None: ...
-    async def __call__(
-        self,
-        scope: _ChannelScope,
-        receive: ASGIReceiveCallable,
-        send: ASGISendCallable,
-    ) -> Any: ...
+    def __init__(self, application: _ChannelApplication, allowed_origins: Iterable[str | Pattern[str]]) -> None: ...
+    async def __call__(self, scope: _ChannelScope, receive: ASGIReceiveCallable, send: ASGISendCallable) -> Any: ...
     def valid_origin(self, parsed_origin: ParseResult | None) -> bool: ...
     def validate_origin(self, parsed_origin: ParseResult | None) -> bool: ...
-    def match_allowed_origin(
-        self, parsed_origin: ParseResult | None, pattern: str | Pattern[str]
-    ) -> bool: ...
+    def match_allowed_origin(self, parsed_origin: ParseResult | None, pattern: str | Pattern[str]) -> bool: ...
     def get_origin_port(self, origin: ParseResult | None) -> int | None: ...
 
-def AllowedHostsOriginValidator(
-    application: _ChannelApplication,
-) -> OriginValidator: ...
+def AllowedHostsOriginValidator(application: _ChannelApplication) -> OriginValidator: ...
 
 class WebsocketDenier(AsyncWebsocketConsumer):
     async def connect(self) -> None: ...

@@ -16,10 +16,5 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None: ...
     def handle(
-        self,
-        *args: Any,
-        application_path: str | None = ...,
-        channels: list[str] | None = ...,
-        layer: str = ...,
-        **options: Any,
+        self, *args: Any, application_path: str | None = ..., channels: list[str] | None = ..., layer: str = ..., **options: Any
     ) -> None: ...

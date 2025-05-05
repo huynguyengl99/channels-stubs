@@ -1,14 +1,17 @@
-from typing import Iterable, Literal, Optional, TypedDict
+from collections.abc import Iterable
+from typing import Literal, TypedDict, type_check_only
 
 from channels.testing.application import ApplicationCommunicator
 from channels.utils import _ChannelApplication
 
 # HTTP test-specific response type
+@type_check_only
 class _HTTPTestResponse(TypedDict, total=False):
     status: int
     headers: Iterable[tuple[bytes, bytes]]
     body: bytes
 
+@type_check_only
 class _HTTPTestScope(TypedDict, total=False):
     type: Literal["http"]
     http_version: str
@@ -19,8 +22,8 @@ class _HTTPTestScope(TypedDict, total=False):
     query_string: bytes
     root_path: str
     headers: Iterable[tuple[bytes, bytes]] | None
-    client: Optional[tuple[str, int]]
-    server: Optional[tuple[str, Optional[int]]]
+    client: tuple[str, int] | None
+    server: tuple[str, int | None] | None
 
 class HttpCommunicator(ApplicationCommunicator):
     scope: _HTTPTestScope

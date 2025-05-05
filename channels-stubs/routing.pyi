@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, type_check_only
 
 from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
 from django.urls.resolvers import URLPattern
@@ -12,37 +12,21 @@ class ProtocolTypeRouter:
     application_mapping: dict[str, _ChannelApplication]
 
     def __init__(self, application_mapping: dict[str, Any]) -> None: ...
-    async def __call__(
-        self,
-        scope: _ChannelScope,
-        receive: ASGIReceiveCallable,
-        send: ASGISendCallable,
-    ) -> None: ...
+    async def __call__(self, scope: _ChannelScope, receive: ASGIReceiveCallable, send: ASGISendCallable) -> None: ...
 
+@type_check_only
 class _ExtendedURLPattern(URLPattern):
-    callback: (  # pyright: ignore[reportIncompatibleMethodOverride]
-        _ASGIApplicationProtocol | URLRouter
-    )
+    callback: _ASGIApplicationProtocol | URLRouter  # pyright: ignore[reportIncompatibleMethodOverride]
 
 class URLRouter:
     _path_routing: bool = ...
     routes: list[_ExtendedURLPattern | URLRouter]
 
     def __init__(self, routes: list[_ExtendedURLPattern | URLRouter]) -> None: ...
-    async def __call__(
-        self,
-        scope: _ChannelScope,
-        receive: ASGIReceiveCallable,
-        send: ASGISendCallable,
-    ) -> None: ...
+    async def __call__(self, scope: _ChannelScope, receive: ASGIReceiveCallable, send: ASGISendCallable) -> None: ...
 
 class ChannelNameRouter:
     application_mapping: dict[str, _ChannelApplication]
 
     def __init__(self, application_mapping: dict[str, _ChannelApplication]) -> None: ...
-    async def __call__(
-        self,
-        scope: _ChannelScope,
-        receive: ASGIReceiveCallable,
-        send: ASGISendCallable,
-    ) -> None: ...
+    async def __call__(self, scope: _ChannelScope, receive: ASGIReceiveCallable, send: ASGISendCallable) -> None: ...

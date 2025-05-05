@@ -1,20 +1,12 @@
-from typing import (
-    Any,
-    Dict,
-    Iterable,
-    Literal,
-    Optional,
-    Tuple,
-    TypeAlias,
-    TypedDict,
-    overload,
-)
+from collections.abc import Iterable
+from typing import Any, Literal, TypedDict, overload, type_check_only
+from typing_extensions import NotRequired, TypeAlias
 
 from asgiref.typing import ASGIVersions
 from channels.testing.application import ApplicationCommunicator
 from channels.utils import _ChannelApplication
-from typing_extensions import NotRequired
 
+@type_check_only
 class _WebsocketTestScope(TypedDict, total=False):
     spec_version: int
     type: Literal["websocket"]
@@ -25,16 +17,16 @@ class _WebsocketTestScope(TypedDict, total=False):
     raw_path: bytes
     query_string: bytes
     root_path: str
-    headers: Iterable[Tuple[bytes, bytes]] | None
-    client: Optional[Tuple[str, int]]
-    server: Optional[Tuple[str, Optional[int]]]
+    headers: Iterable[tuple[bytes, bytes]] | None
+    client: tuple[str, int] | None
+    server: tuple[str, int | None] | None
     subprotocols: Iterable[str] | None
-    state: NotRequired[Dict[str, Any]]
-    extensions: Optional[Dict[str, Dict[object, object]]]
+    state: NotRequired[dict[str, Any]]
+    extensions: dict[str, dict[object, object]] | None
 
 _Connected: TypeAlias = bool
 _CloseCodeOrAcceptSubProtocol: TypeAlias = int | str | None
-_WebsocketConnectResponse: TypeAlias = Tuple[_Connected, _CloseCodeOrAcceptSubProtocol]
+_WebsocketConnectResponse: TypeAlias = tuple[_Connected, _CloseCodeOrAcceptSubProtocol]
 
 class WebsocketCommunicator(ApplicationCommunicator):
     scope: _WebsocketTestScope
@@ -44,14 +36,12 @@ class WebsocketCommunicator(ApplicationCommunicator):
         self,
         application: _ChannelApplication,
         path: str,
-        headers: Iterable[Tuple[bytes, bytes]] | None = ...,
+        headers: Iterable[tuple[bytes, bytes]] | None = ...,
         subprotocols: Iterable[str] | None = ...,
         spec_version: int | None = ...,
     ) -> None: ...
     async def connect(self, timeout: float = ...) -> _WebsocketConnectResponse: ...
-    async def send_to(
-        self, text_data: str | None = ..., bytes_data: bytes | None = ...
-    ) -> None: ...
+    async def send_to(self, text_data: str | None = ..., bytes_data: bytes | None = ...) -> None: ...
     @overload
     async def send_json_to(self, data: dict[str, Any]) -> None: ...
     @overload
