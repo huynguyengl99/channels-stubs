@@ -1,3 +1,9 @@
+## v0.1.8 (2025-05-13)
+
+### Fix
+
+- **allowlist**: bring back atterisk allow of UserLazyObject
+
 ## v0.1.7 (2025-05-13)
 
 ### Fix
