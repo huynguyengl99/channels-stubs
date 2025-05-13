@@ -1,5 +1,3 @@
-from typing import Any
-
 from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
 from channels.middleware import BaseMiddleware
 from django.contrib.auth.backends import BaseBackend
@@ -7,17 +5,12 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
 from django.utils.functional import LazyObject
 
-from .consumer import _ChannelScope, _LazySession
-from .db import database_sync_to_async
+from .consumer import _ChannelScope
 from .utils import _ChannelApplication
 
-@database_sync_to_async
-def get_user(scope: _ChannelScope) -> AbstractBaseUser | AnonymousUser: ...
-@database_sync_to_async
-def login(scope: _ChannelScope, user: AbstractBaseUser, backend: BaseBackend | None = ...) -> None: ...
-@database_sync_to_async
-def logout(scope: _ChannelScope) -> None: ...
-def _get_user_session_key(session: _LazySession) -> Any: ...
+async def get_user(scope: _ChannelScope) -> AbstractBaseUser | AnonymousUser: ...
+async def login(scope: _ChannelScope, user: AbstractBaseUser, backend: BaseBackend | None = ...) -> None: ...
+async def logout(scope: _ChannelScope) -> None: ...
 
 class UserLazyObject(AbstractBaseUser, LazyObject):
     def _setup(self) -> None: ...
