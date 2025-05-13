@@ -1,3 +1,9 @@
+## v0.1.7 (2025-05-13)
+
+### Fix
+
+- **internal**: convert auth database_sync_to_async to async def and remove some internal function type definition
+
 ## v0.1.6 (2025-05-05)
 
 ### Fix
