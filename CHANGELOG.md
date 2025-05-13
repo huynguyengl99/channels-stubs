@@ -1,3 +1,9 @@
+## v0.1.9 (2025-05-13)
+
+### Fix
+
+- **typo**: update Channel to Channels
+
 ## v0.1.8 (2025-05-13)
 
 ### Fix
