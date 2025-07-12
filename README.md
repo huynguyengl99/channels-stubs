@@ -4,6 +4,8 @@
 [![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
 [![PYPI](https://img.shields.io/pypi/v/channels-stubs)](https://pypi.org/project/channels-stubs/)
 
+# NOTE: This package is no longer used, due to the completion of work on the well-known typeshed repo. Now use https://pypi.org/project/types-channels/ instead.
+
 
 Stubs for [Django Channels](https://pypi.org/project/channels/).
 Supports Python 3.10 and up. Supports Channels 4+.
